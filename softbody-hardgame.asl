@@ -11,7 +11,7 @@ init
 
 update
 {
-    if(!vars.resetable &&current.puzzleNumber == 68){
+    if(!vars.resetable && current.puzzleNumber == 68){
         vars.resetable = true;
     }
 }
