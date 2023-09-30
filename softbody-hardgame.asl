@@ -11,7 +11,7 @@ init
 
 update
 {
-    if(!vars.resetable && current.puzzleNumber == 68){
+    if(!vars.resetable && current.puzzleNumber != 1){
         vars.resetable = true;
     }
 }
@@ -26,15 +26,14 @@ start
 
 split
 {
-    if(current.puzzleNumber != 68 && current.puzzleNumber > old.puzzleNumber || current.puzzleNumber == 92 && current.sceneCounter > old.sceneCounter){
+    if(old.puzzleNumber != 1 && current.puzzleNumber > old.puzzleNumber || current.puzzleNumber == 92 && current.sceneCounter > old.sceneCounter){
         return true;
     }
 }
 
 reset
 {
-    if(vars.resetable && current.puzzleNumber == 1
-    || old.puzzleNumber == 1 && current.puzzleNumber != 1 && current.puzzleNumber != 68){
+    if(vars.resetable && current.puzzleNumber == 1){
         return true;
     }
 }
