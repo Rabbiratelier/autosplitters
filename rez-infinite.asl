@@ -1,3 +1,5 @@
+//to use stats display, you need to install ASL Var Viewer(https://github.com/hawkerm/LiveSplit.ASLVarViewer)
+
 state("REZ")
 {
     int area: 0x004BB108, 0x10;
@@ -16,7 +18,14 @@ state("REZ")
 
 startup
 {
-    settings.Add("directassault", false, "category: direct assault");
+    settings.Add("directassault", false, "Category: direct assault");
+    settings.Add("any", true, "Category: any%");
+    settings.Add("hundred", false, "Category: 100%");
+    settings.Add("layer", true, "Split on every layer");
+    settings.Add("boss", true, "Split on starting a boss fight");
+    settings.Add("bossdead", true, "Split on defeating a boss (even if unchecked, it splits on the end of run according to category)");
+    settings.Add("area", true, "Split on entering a new area");
+    settings.Add("fourbosses", false, "Split on defeating every sub-boss in front of EDEN (Area 5)");
 }
 
 init
@@ -60,23 +69,23 @@ split
     if(current.gameState == 8){
         if(current.layer == old.layer+1 
         && current.area > 0 && current.area < 5 && current.layer <= 10){
-            return true;
+            return settings["layer"];
+        }
+        if(current.area < 5 && current.layer > 10 && current.bossHealth == 1f && old.bossHealth == 0f){
+            return settings["boss"];
+        }
+        if(current.layer == 18 && current.bossHealth == 0f && old.bossHealth > 0f){
+            return settings["bossdead"] || current.area == 4 && settings["any"];
         }
         if(current.area > old.area){
             return true;
         }
-        if(current.area < 5 && current.layer > 10 && current.bossHealth == 1f && old.bossHealth == 0f){
-            return true;
-        }
-        if(current.layer == 18 && current.bossHealth == 0f && old.bossHealth > 0f){
-            return true;
-        }
-        if(current.area == 6 && current.layer >= 8){
+        if(current.area == 6){
             if(current.bossHealth == 1f && old.bossHealth == 0f){
-                return true;
+                return current.layer >= 8;
             }
             if(current.bossHealth == 0f && old.bossHealth > 0f){
-                return true;
+                return settings["fourbosses"] || current.layer >= 8;
             }
         }
     }
