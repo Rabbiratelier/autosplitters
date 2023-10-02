@@ -5,33 +5,80 @@ state("REZ")
     int layerAlt: 0x004C2D68, 0x0;
     float bossHealth: 0x004B7108, 0x0;
     int menuState: 0x005847B0, 0x20, 0x68, 0xB8;
+    int gameState: 0x005849A8, 0xF0;
+    int supSpawned: 0x556F64;
+    int supObtained: 0x556F6C;
+    int enemySpawned: 0x5222E8;
+    int enemyShotDown: 0x5222EC;
+    int layerAnalyzable: 0x556f54;
+    int layerAnalyzed: 0x556f5c;
+}
+
+startup
+{
+    settings.Add("directassault", false, "category: direct assault");
+}
+
+init
+{
+    vars.analyzation = "-%";
+    vars.shotDown = "-.--%";
+    vars.supportItem = "-.--%";
+}
+
+update
+{
+    if(current.layerAnalyzable == 0){
+        vars.analyzation = "-%";
+    }else{
+        vars.analyzation = 
+        Math.Round((float)current.layerAnalyzed/(float)current.layerAnalyzable*100f).ToString() + "%";
+    }
+    if(current.enemySpawned == 0){
+        vars.shotDown = "-.--%";
+    }else{
+        vars.shotDown =
+        Math.Round((float)current.enemyShotDown/(float)current.enemySpawned*100f,2).ToString("f") + "%";
+    }
+    if(current.supSpawned == 0){
+        vars.supportItem = "-.--%";
+    }else{
+        vars.supportItem =
+        Math.Round((float)current.supObtained/(float)current.supSpawned*100f,2).ToString("f") + "%";
+    }
 }
 
 start
 {
-    if(current.area == 1 && old.area == 0 && current.layerAlt == 0){
-        vars.resetable = true;
+    if(current.gameState == 8 && current.area == 1 && old.area == 0){
         return true;
     }
 }
 
 split
 {
-    if(current.area > 0 && current.area < 5 && current.layer <= 10 && current.layer == old.layer+1){
-        vars.resetable = false;
-        return true;
-    }
-    if(current.area > 1 && old.area == 0 && current.layerAlt == 0){
-        return true;
-    }
-    if(current.layer == 18 && old.layer == 16){
-        return true;
-    }
-    if(current.layer == 2 && current.layerAlt == 0 && old.layerAlt != 0){
-        return true;
-    }
-    if(current.area == 6 && old.area != 6){
-        return true;
+    if(current.gameState == 8){
+        if(current.layer == old.layer+1 
+        && current.area > 0 && current.area < 5 && current.layer <= 10){
+            return true;
+        }
+        if(current.area > old.area){
+            return true;
+        }
+        if(current.area < 5 && current.layer > 10 && current.bossHealth == 1f && old.bossHealth == 0f){
+            return true;
+        }
+        if(current.layer == 18 && current.bossHealth == 0f && old.bossHealth > 0f){
+            return true;
+        }
+        if(current.area == 6 && current.layer >= 8){
+            if(current.bossHealth == 1f && old.bossHealth == 0f){
+                return true;
+            }
+            if(current.bossHealth == 0f && old.bossHealth > 0f){
+                return true;
+            }
+        }
     }
 }
 
@@ -40,7 +87,7 @@ reset
     if(current.menuState == 3 && old.menuState == 1){
         return true;
     }
-    if(vars.resetable && current.area == 1 && current.layer == 0 && current.layerAlt != 0 && old.layerAlt == 0){
+    if(settings["directassault"] && current.gameState == 10 && old.gameState == 8){
         return true;
     }
 }
