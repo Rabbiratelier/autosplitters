@@ -59,7 +59,7 @@ update
 
 start
 {
-    if(current.gameState == 8 && current.area == 1 && old.area == 0){
+    if(current.gameState == 8 && current.area == 3 && old.area == 0){
         return true;
     }
 }

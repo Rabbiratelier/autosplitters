@@ -59,7 +59,7 @@ update
 
 start
 {
-    if(current.gameState == 8 && current.area == 1 && old.area == 0){
+    if(current.gameState == 8 && current.area == 2 && old.area == 0){
         return true;
     }
 }
@@ -71,16 +71,12 @@ split
         && current.area > 0 && current.area < 5 && current.layer <= 10){
             return settings["layer"];
         }
-        if(current.area != 3 && current.area < 5 && current.layer > 10 && current.bossHealth == 1f && old.bossHealth == 0f){
-            return settings["boss"];
-        }
-        if(current.area == 3 && current.layer == 18 && old.layer != 18){
+        if(current.area < 5 && current.layer > 10 && current.bossHealth == 1f && old.bossHealth == 0f){
             return settings["boss"];
         }
         if(current.layer == 18 && current.bossHealth == 0f && old.bossHealth > 0f){
             return settings["bossdead"] || current.area == 4 && settings["any"];
         }
-
         if(current.area > old.area){
             return true;
         }
