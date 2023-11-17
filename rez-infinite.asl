@@ -20,7 +20,6 @@ state("REZAX-Win64-Shipping")
 {
     int layerAX: 0x2B6F230, 0x8, 0xFC;
     int bossStateAX: 0x2DB7880, 0x178, 0x328, 0x8, 0x20, 0x3A0;
-    //bossstate destination -> 5
 }
 
 startup
@@ -71,7 +70,7 @@ start
 {
     if(game.ProcessName == "REZ"){
         if(current.gameState == 8 && current.area == 1 && old.area == 0){
-            vars.axreset = false
+            vars.axreset = false;
             return true;
         }
     }else if(game.ProcessName == "REZAX-Win64-Shipping"){
