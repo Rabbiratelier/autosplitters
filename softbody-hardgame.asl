@@ -1,3 +1,4 @@
+//メモ デスカウントかクリアカウントかなにかあるだろう
 state("Soft_Body")
 {
     int puzzleNumber: 0x00875258, 0x0;
