@@ -2,24 +2,23 @@
 
 state("REZ")
 {
-    int area: 0x004BB108, 0x10;
-    int layer: 0x004BB048, 0x550;
-    int layerAlt: 0x004C2D68, 0x0;
-    float bossHealth: 0x004B7108, 0x0;
-    int menuState: 0x005847B0, 0x20, 0x68, 0xB8;
-    int gameState: 0x005849A8, 0xF0;
-    int supSpawned: 0x556F64;
-    int supObtained: 0x556F6C;
-    int enemySpawned: 0x5222E8;
-    int enemyShotDown: 0x5222EC;
-    int layerAnalyzable: 0x556f54;
-    int layerAnalyzed: 0x556f5c;
+    int area: 0x004BE128, 0x10;
+    int layer: 0x004BE068, 0x510;
+    float bossHealth: 0x9f83c0, 0x194;
+    int menuState: 0x005877D0, 0x20, 0x68, 0xB8;
+    int gameState: 0x005879C8, 0xF0;
+    int supSpawned: 0x559F84;
+    int supObtained: 0x559F8C;
+    int enemySpawned: 0x525308;
+    int enemyShotDown: 0x52530C;
+    int layerAnalyzable: 0x559f74;
+    int layerAnalyzed: 0x559f7c;
 }
 
 state("REZAX-Win64-Shipping")
 {
-    int layerAX: 0x2B6F230, 0x8, 0xFC;
-    int bossStateAX: 0x2DB7880, 0x178, 0x328, 0x8, 0x20, 0x3A0;
+    int layerAX: 0x2B69210, 0x8, 0xFC;
+    int bossStateAX: 0x2DEE6C0, 0x10, 0x8, 0x100, 0x370, 0x3A0;
 }
 
 startup
